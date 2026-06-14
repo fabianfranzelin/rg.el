@@ -93,10 +93,9 @@ the content."
                                        '(read-only t wgrep-header t))
                   nil)))))
         (goto-char (point-max))
-        (re-search-backward "^rg finished .*$" nil t)
-        ;; Move to the start of the line after the last result, and
-        ;; mark everything from that line forward as wgrep-footer.
-        (when (zerop (forward-line -1))
+        (when (re-search-backward "^rg finished .*$" nil t)
+          ;; Mark the "rg finished" line and everything after it as footer.
+          (beginning-of-line)
           (add-text-properties (point) (point-max)
                                '(read-only t wgrep-footer t))))))
 
